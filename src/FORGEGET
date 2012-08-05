@@ -22,6 +22,6 @@ case $1 in
     ls -l | mail -s "$(uname -n) ${PROG} LIST" ${MAILTO}
     ;;
   *)
-    echo "USAGE: ${PROG} {get|list} you@example.com"
+    echo "USAGE: ${PROG} {get|list}"
     ;;
 esac
