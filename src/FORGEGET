@@ -1,0 +1,27 @@
+#!/bin/bash
+LANG=C
+MAILTO=you@example.com
+
+URI=pkgs.repoforge.org
+TARGET=http://${URI}/rpmforge-release/
+DIR=${HOME}/REPOS/rpmforge
+PROG=$(basename $0)
+
+[ ! -d ${DIR} ] && mkdir -p ${DIR}
+
+case $1 in
+  [gG][eE][tT])
+    cd ${DIR}
+    wget -r -l 1 ${TARGET} && rm -fr ${URI}
+    for A in $(find $(pwd) -type f); do mv $A .; done
+    rm -rf $(ls -l | grep ^d | awk '{print $NF}')
+    ls -l | mail -s "$(uname -n) ${PROG} LIST" ${MAILTO}
+    ;;
+  [lL][iI][sS][tT]|[lL][sS][tT])
+    cd ${DIR}
+    ls -l | mail -s "$(uname -n) ${PROG} LIST" ${MAILTO}
+    ;;
+  *)
+    echo "USAGE: ${PROG} {get|list} you@example.com"
+    ;;
+esac
